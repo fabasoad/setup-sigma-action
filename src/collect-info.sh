@@ -13,8 +13,9 @@ main() {
   if command -v python >/dev/null 2>&1; then
     python_version=$(python --version | cut -d ' ' -f 2)
     minor_version=$(echo "${python_version}" | cut -d '.' -f 2)
-    # sigma >=2.0.0 requires python >=3.10
-    if [ "${minor_version}" -ge 10 ]; then
+    # sigma >=2.0.0 requires python >=3.10. Python >3.14 is not supported yet
+    # since google-re2 (pysigma dependency) has no prebuilt wheels for it.
+    if [ "${minor_version}" -ge 10 ] && [ "${minor_version}" -le 14 ]; then
       python_installed="true"
     fi
   fi
